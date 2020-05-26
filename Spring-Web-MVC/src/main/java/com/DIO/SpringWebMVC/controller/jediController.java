@@ -38,12 +38,9 @@ public class jediController {
 
         return modelAndView;
     }
-    @PostMapping("/jedi")
-    public String createJedi(@Validated @ModelAttribute Jedi jedi){
-        repository.add(jedi);
-
-        return "redirect:jedi";
-
+    @PostMapping("/api/jedi")
+    public Jedi createJedi(@Validated @ModelAttribute Jedi jedi){
+        return repository.save(jedi);
     }
 
 }

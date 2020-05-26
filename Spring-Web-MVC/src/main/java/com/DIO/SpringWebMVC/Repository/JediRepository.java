@@ -12,14 +12,24 @@ public class JediRepository {
     public JediRepository(List<Jedi> jedi) {
         jedi = new ArrayList<> ();
 
-        jedi.add(new Jedi("Luke", "Skylwalker"));
+        jedi.add (new Jedi ("Luke" , "Skylwalker"));
     }
 
-    public List<Jedi> getAllJEdi(){
+    public List<Jedi> getAllJEdi() {
 
         return this.jedi;
     }
-    public void add(final Jedi jedi){
+
+    /*public void add(final Jedi jedi){add:Jedi(jedi)}
         this.jedi.add(jedi);
     }
+    */
+    public List<Jedi> findAll() {
+        return this.jedi;
+    }
+
+    public Jedi findById(Long id) {
+        return this.findById (id);
+    }
+
 }

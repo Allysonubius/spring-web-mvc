@@ -34,4 +34,8 @@ public class Jedi {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
+
+    public String get() {
+        return getName ();
+    }
 }
