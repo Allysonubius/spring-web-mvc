@@ -3,7 +3,7 @@ package SpringWebMVC.Intermediario.Controller;
 import SpringWebMVC.Intermediario.Controller.Request.SoldadoEditRequest;
 import SpringWebMVC.Intermediario.DTO.Soldado;
 import SpringWebMVC.Intermediario.Services.SoldadoService;
-import org.apache.coyote.Response;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +15,8 @@ import java.util.List;
 public class SoldadoController {
 
     private SoldadoService soldadoService;
+    private ObjectMapper objectMapper;
+    private Long id;
 
     public  SoldadoController(SoldadoService soldadoService){
         this.soldadoService = soldadoService;
@@ -22,7 +24,7 @@ public class SoldadoController {
 
     @GetMapping("/(cpf)")
     public ResponseEntity<Soldado> buscarSoldado(@PathVariable() String cpf){
-        Soldado soldado = soldadoService.buscarSoldado(cpf);
+        Soldado soldado = soldadoService.buscarSoldado(id);
         return  ResponseEntity.status(HttpStatus.OK).body(soldado);
     }
 
@@ -35,17 +37,17 @@ public class SoldadoController {
     @PostMapping("/(cpf)")
     public ResponseEntity editarSoldado(@PathVariable() String cpf,
                                         @RequestBody SoldadoEditRequest soldadoEditRequest){
-            soldadoService.alterarSoldado(cpf,soldadoEditRequest);
+            soldadoService.alterarSoldado(id,soldadoEditRequest);
         return ResponseEntity.ok().build ();
     }
     @DeleteMapping
     public ResponseEntity deletSoldado(@PathVariable String cpf){
-        soldadoService.deletarSoldado(cpf);
+        soldadoService.deletarSoldado(id);
         return ResponseEntity.ok().build ();
     }
     @GetMapping
-    public ResponseEntity<List<Soldado>>buscarSoldado(){
-        List<Soldado> soldados = soldadoService.ListarSoldado ();
-        return ResponseEntity.status(HttpStatus.OK).body(soldados);
+    public <Resources> ResponseEntity<List<Soldado>> buscarSoldado(Long id , Long resources){
+        List<Soldado> soldadoListResponses = soldadoService.buscarSoldado (resources);
+        return ResponseEntity.status(HttpStatus.OK).body (soldadoListResponses);
     }
 }
